@@ -12,7 +12,7 @@ const addCart = catchAsync(async (req, res) => {
 
   await cartService.addCart(userId, productId, quantity);
 
-  return res.status(201).json({ message: "productDeleted" });
+  return res.status(201).json({ message: "productAdded" });
 });
 
 const getCartsByUserId = catchAsync(async (req, res) => {

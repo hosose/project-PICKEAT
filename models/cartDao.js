@@ -12,7 +12,7 @@ const addCart = async (userId, productId, quantity = 1) => {
             )
         VALUES(?,?,?)               
         `,
-      [userId]
+      [productId, userId, quantity]
     );
   } catch (err) {
     raiseCustomError("INVALID_DATA_INPUT", 500);
