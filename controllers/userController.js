@@ -1,16 +1,16 @@
-const userService = require("../services/userService");
-const { catchAsync } = require("../utils/error");
+const userService = require('../services/userService');
+const { catchAsync } = require('../utils/error');
 
 const signUp = catchAsync(async (req, res) => {
   const { email, password, name, phonenumber } = req.body;
 
   if (!email || !password || !name || !phonenumber) {
-    return res.status(400).json({ message: "KEY_ERROR" });
+    return res.status(401).json({ message: 'KEY_ERROR' });
   }
 
   await userService.signUp(email, password, name, phonenumber);
   return res.status(201).json({
-    message: "SIGNUP_SUCCESS",
+    message: 'SIGNUP_SUCCESS',
   });
 });
 

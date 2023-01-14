@@ -1,19 +1,20 @@
-const productDao = require("../models/productDao");
+const productDao = require('../models/productDao');
+const { raiseCustomError } = require('../utils/error');
 
 const getProductsByParameter = async (param) => {
   const makeNameFilter = (name) => {
-    if (typeof name == "object") {
+    if (typeof name == 'object') {
       let nameClauses = name.map((x) => `C.name = '${x}'`);
-      return `(${nameClauses.join(" OR ")})`;
+      return `(${nameClauses.join(' OR ')})`;
     } else {
       return `(C.name ='${name}')`;
     }
   };
 
   const makeTypeFilter = (type) => {
-    if (typeof type == "object") {
+    if (typeof type == 'object') {
       let typeClauses = type.map((x) => `PT.name = '${x}'`);
-      return `(${typeClauses.join(" OR ")})`;
+      return `(${typeClauses.join(' OR ')})`;
     } else {
       return `(PT.name ='${type}')`;
     }
@@ -32,7 +33,7 @@ const getProductsByParameter = async (param) => {
       return builderSet[key](value);
     });
 
-    return `WHERE ${whereClauses.join(" AND ")}`;
+    return `WHERE ${whereClauses.join(' AND ')}`;
   };
 
   const products = await productDao.getProductsByParameter(
@@ -40,9 +41,7 @@ const getProductsByParameter = async (param) => {
   );
 
   if (!products) {
-    const err = new Error("products does not exist");
-    err.statusCode = 404;
-    throw err;
+    raiseCustomError('products does not exist', 404);
   }
   return products;
 };

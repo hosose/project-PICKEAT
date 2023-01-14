@@ -1,21 +1,21 @@
-const { database } = require("./dataSource");
-const { raiseCustomError } = require("../utils/error");
+const { database } = require('./dataSource');
+const { raiseCustomError } = require('../utils/error');
 
 const addCart = async (userId, productId, quantity = 1) => {
   try {
     return await database.query(
       `INSERT INTO
-            carts(
-                product_id,
-                user_id,
-                quantity
-            )
-        VALUES(?,?,?)               
+        carts(
+          product_id,
+          user_id,
+          quantity
+        )
+      VALUES(?,?,?)               
         `,
       [productId, userId, quantity]
     );
   } catch (err) {
-    raiseCustomError("INVALID_DATA_INPUT", 500);
+    raiseCustomError('INVALID_DATA_INPUT', 500);
   }
 };
 
@@ -57,7 +57,7 @@ const getCartsByUserId = async (userId) => {
       [userId]
     );
   } catch (err) {
-    raiseCustomError("INVALID_DATA_INPUT", 500);
+    raiseCustomError('INVALID_DATA_INPUT', 500);
   }
 };
 
@@ -73,7 +73,7 @@ const modifyQuantity = async (userId, productId, quantity) => {
       [quantity, userId, productId]
     );
   } catch (err) {
-    raiseCustomError("INVALID_DATA_INPUT", 500);
+    raiseCustomError('INVALID_DATA_INPUT', 500);
   }
 };
 
@@ -83,12 +83,12 @@ const deleteProduct = async (userId, productId) => {
       `DELETE FROM 
         carts
       WHERE
-        product_id = ? AND user_id = ?
-        `,
-      [productId, userId]
+      user_id = ? AND product_id = ?
+      `,
+      [userId, productId]
     );
   } catch (err) {
-    raiseCustomError("INVALID_DATA_INPUT", 500);
+    raiseCustomError('INVALID_DATA_INPUT', 500);
   }
 };
 

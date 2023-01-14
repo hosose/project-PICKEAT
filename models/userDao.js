@@ -1,22 +1,21 @@
-const { database } = require("./dataSource");
+const { database } = require('./dataSource');
+const { raiseCustomError } = require('../utils/error');
 
 const createUser = async (email, hashedPassword, name, phonenumber) => {
   try {
     return await database.query(
       `INSERT INTO users(
-                email, 
-                password, 
-                name, 
-                phone_number
-                ) 
-            VALUES (?, ?, ?, ?);
-            `,
+        email, 
+        password, 
+        name, 
+        phone_number
+        ) 
+      VALUES (?, ?, ?, ?);
+      `,
       [email, hashedPassword, name, phonenumber]
     );
   } catch (err) {
-    const error = new Error("INVALID_DATA_INPUT");
-    error.statusCode = 500;
-    throw error;
+    raiseCustomError('INVALID_DATA_INPUT', 400);
   }
 };
 
@@ -50,9 +49,7 @@ const signIn = async (email) => {
       [email]
     );
   } catch (err) {
-    const error = new Error("INVALID_DATA_INPUT");
-    error.statusCode = 500;
-    throw error;
+    raiseCustomError('INVALID_DATA_INPUT', 400);
   }
 };
 

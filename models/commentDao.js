@@ -1,16 +1,16 @@
-const { database } = require("./dataSource");
+const { database } = require('./dataSource');
 
 const createComment = async (userId, content, rate, productId) => {
   const comment = await database.query(
     `
       INSERT INTO comments(
-                  user_id, 
-                  content, 
-                  rate, 
-                  product_id
-                  )
-            VALUES(?, ?, ?, ?);
-            `,
+        user_id, 
+        content, 
+        rate, 
+        product_id
+        )
+      VALUES(?, ?, ?, ?);
+      `,
     [userId, content, rate, productId]
   );
   return comment;
@@ -27,10 +27,14 @@ const getCommentsByProductId = async (productId) => {
           "content", comments.content,
           "rate", comments.rate)
         ) AS comments
-      FROM comments
-      LEFT JOIN users ON users.id = comments.user_id
-      WHERE comments.product_id = ?
-      GROUP BY comments.product_id            
+      FROM
+        comments
+      LEFT JOIN
+        users ON users.id = comments.user_id
+      WHERE
+        comments.product_id = ?
+      GROUP BY
+        comments.product_id            
     `,
     [productId]
   );

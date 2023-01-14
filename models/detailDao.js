@@ -1,6 +1,6 @@
-const { database } = require("./dataSource");
+const { database } = require('./dataSource');
 
-const getLectureByLectureId = async (lectureId) => {
+const getDetailByProductId = async (productId) => {
   const [lecture] = await database.query(
     `
       SELECT
@@ -36,11 +36,11 @@ const getLectureByLectureId = async (lectureId) => {
       WHERE 
             P.id = ?
     `,
-    [lectureId]
+    [productId]
   );
   return lecture;
 };
 
 module.exports = {
-  getLectureByLectureId,
+  getDetailByProductId,
 };
