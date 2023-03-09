@@ -54,17 +54,21 @@ const signIn = async (email) => {
 };
 
 const getUserByEmail = async (email) => {
-  const [user] = await database.query(
-    `
+  try {
+    const [user] = await database.query(
+      `
       SELECT *
       FROM 
         users u
       WHERE
         u.email = ?`,
-    [email]
-  );
+      [email]
+    );
 
-  return user;
+    return user;
+  } catch (err) {
+    raiseCustomError('INVALID_DATA_INPUT', 400);
+  }
 };
 
 module.exports = {

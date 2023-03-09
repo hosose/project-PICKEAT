@@ -17,6 +17,9 @@ const signUp = catchAsync(async (req, res) => {
 const signIn = catchAsync(async (req, res) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    return res.status(401).json({ message: 'KEY_ERROR' });
+  }
   const accessToken = await userService.signIn(email, password);
   res.status(200).json({ accessToken: accessToken });
 });
